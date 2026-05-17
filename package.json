@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "generate": "tsx scripts/generate-data.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^10.4.0",
