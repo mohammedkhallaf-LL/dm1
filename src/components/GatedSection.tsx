@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 interface GatedSectionProps {
-  interests: string[];
+  gatedInterests: string[];
 }
 
-export default function GatedSection({ interests }: GatedSectionProps) {
+export default function GatedSection({ gatedInterests }: GatedSectionProps) {
   const [revealed, setRevealed] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ export default function GatedSection({ interests }: GatedSectionProps) {
             Additional Buying Preferences
           </div>
           <div className="flex flex-wrap gap-2">
-            {interests.map((interest) => (
+            {gatedInterests.map((interest) => (
               <span
                 key={interest}
                 className="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs text-gray-700"

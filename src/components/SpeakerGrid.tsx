@@ -3,7 +3,7 @@ import type { Person } from "@/lib/types";
 
 export default function SpeakerGrid({ persons }: { persons: Person[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4">
       {persons.map((person) => {
         const primarySession = person.sessions?.[0];
         return (

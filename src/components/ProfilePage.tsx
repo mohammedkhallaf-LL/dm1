@@ -11,7 +11,8 @@ interface ProfilePageProps {
 
 function roleLabel(person: Person, sectionLabel: string): string {
   if (person.participantType === "speaker") {
-    return `${sectionLabel.replace(/s$/, "")} · ${person.sessions?.[0]?.track ?? "Speaker"}`;
+    const singularSection = sectionLabel.replace(/s$/, "");
+    return `${singularSection} · ${person.sessions?.[0]?.track ?? singularSection}`;
   }
   if (person.participantType === "exhibitor_staff") return `${person.company} Staff`;
   if (person.participantType === "sponsor_contact") {
@@ -155,7 +156,7 @@ export default function ProfilePage({ person, event, sectionLabel, sectionHref }
       {/* Gated section */}
       {person.hasGatedSection && person.gatedInterests && (
         <section className="mb-6">
-          <GatedSection interests={person.gatedInterests} />
+          <GatedSection gatedInterests={person.gatedInterests} />
         </section>
       )}
     </div>
