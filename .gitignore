@@ -41,5 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # generated event data
-src/data/events/
+src/data/events/*.json
+!src/data/events/index.json
 src/data/stats.json
