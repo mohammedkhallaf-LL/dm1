@@ -3,8 +3,9 @@ import EventListItem from "@/components/EventListItem";
 import Pagination from "@/components/Pagination";
 import { notFound } from "next/navigation";
 
-export default function EventsPageN({ params }: { params: { n: string } }) {
-  const page = parseInt(params.n, 10);
+export default async function EventsPageN({ params }: { params: Promise<{ n: string }> }) {
+  const { n } = await params;
+  const page = parseInt(n, 10);
   if (isNaN(page) || page < 2) notFound();
 
   const { items, totalPages, total } = getPaginatedEvents(page);
