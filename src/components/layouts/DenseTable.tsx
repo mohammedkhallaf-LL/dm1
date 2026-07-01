@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { ListLayoutProps } from './CardGrid.tsx'
+import { Pagination } from '../site/Pagination.tsx'
 
-export function DenseTable({ people, companies, exampleId }: ListLayoutProps) {
+export function DenseTable({ people, companies, exampleId, page, totalPages, baseHref }: ListLayoutProps) {
   const q = `?example=${exampleId}`
   return (
     <div className="overflow-x-auto p-4">
@@ -31,6 +32,9 @@ export function DenseTable({ people, companies, exampleId }: ListLayoutProps) {
           ))}
         </tbody>
       </table>
+      {baseHref && totalPages ? (
+        <Pagination page={page ?? 1} totalPages={totalPages} baseHref={baseHref} query={`?example=${exampleId}`} />
+      ) : null}
     </div>
   )
 }
