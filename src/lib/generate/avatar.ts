@@ -8,11 +8,16 @@ function hash(s: string): number {
   return h >>> 0
 }
 
+/** First Unicode code point of a string (surrogate-pair safe — never splits an emoji). */
+function firstChar(s: string): string {
+  return Array.from(s)[0] ?? ''
+}
+
 function initials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean)
   if (parts.length === 0) return '?'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  if (parts.length === 1) return Array.from(parts[0]).slice(0, 2).join('').toUpperCase()
+  return (firstChar(parts[0]) + firstChar(parts[parts.length - 1])).toUpperCase()
 }
 
 function escapeXml(s: string): string {
