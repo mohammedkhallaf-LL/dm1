@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 export default function Home() {
-  redirect("/events");
+  return <main className="p-8 text-2xl font-bold">Captello Summit — building…</main>
 }

@@ -40,7 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# generated event data
-src/data/events/*.json
-!src/data/events/index.json
-src/data/stats.json
+# generated example fixtures — COMMITTED for reproducible demos & QA diffing
+# (regenerate with `npm run generate`)
+!src/data/
