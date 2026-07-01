@@ -15,4 +15,9 @@ const co: CompanyRecord = {
   twitter: null, instagram: null, youtube: null, description: null,
   profileUrl: null, additionalInfo: {},
 }
-void ind; void co
+const badCompanyTypes: CompanyRecord = {
+  ...co,
+  // @ts-expect-error - companies must reject person-only participant types
+  types: ['attendees'],
+}
+void ind; void co; void badCompanyTypes

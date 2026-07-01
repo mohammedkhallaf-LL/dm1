@@ -6,7 +6,7 @@ export type AdditionalInfo = Record<string, unknown>
 
 /**
  * A person record. The keys through `additionalInfo` are the EXACT export
- * contract (INDIVIDUAL_FIELDS). `id`/`eventId` are generation-only (never exported).
+ * contract (INDIVIDUAL_FIELDS). `id` is generation-only (never exported).
  */
 export interface IndividualRecord {
   id: string
