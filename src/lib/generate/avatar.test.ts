@@ -13,4 +13,14 @@ assert.ok(c.includes('AC'), 'company monogram')
 
 const uri = svgToDataUri(a)
 assert.ok(uri.startsWith('data:image/svg+xml'), 'data uri')
+
+// XML-unsafe names must not leak raw < > & " into the SVG markup
+const unsafe = personAvatarSvg('<b>Ann & "Bob"')
+assert.ok(!/<text[^>]*>[^<]*<(?!\/text)/.test(unsafe), 'no unescaped < inside text content')
+assert.ok(!unsafe.includes('& '), 'raw ampersand escaped')
+// deterministic even for unsafe input
+assert.equal(personAvatarSvg('<b>Ann'), personAvatarSvg('<b>Ann'), 'deterministic for unsafe input')
+// empty/whitespace name falls back without crashing
+assert.ok(personAvatarSvg('   ').startsWith('<svg'), 'whitespace name still yields svg')
+
 console.log('avatar OK')
