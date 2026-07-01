@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import '@fontsource-variable/inter'
 import './globals.css'
+import { QaBar } from '../components/qa/QaBar.tsx'
 
 export const metadata: Metadata = {
   title: 'Captello Summit',
@@ -14,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Suspense fallback={null}><QaBar /></Suspense>
+        {children}
+      </body>
     </html>
   )
 }
