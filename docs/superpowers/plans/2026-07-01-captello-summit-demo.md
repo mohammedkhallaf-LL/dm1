@@ -21,6 +21,7 @@
 - **Scale reality:** pre-render list pages; render individual detail/profile routes on demand (default dynamic). Do not `generateStaticParams` hundreds of thousands of profile pages.
 - **Commit discipline:** each task ends by committing. Do NOT push until the user asks. Conventional Commits (`type(scope): desc`).
 - **Verify before done:** `npx tsc --noEmit` clean and `npm run build` succeeds are required at the milestones noted.
+- **Test imports use explicit `.ts` extensions** (test files run via `tsx`). `tsconfig.json` sets `allowImportingTsExtensions: true` (added in Task 3; safe under `moduleResolution: bundler` + `noEmit`), so `tsc --noEmit` accepts `.ts`-suffixed imports — this is intentional, not a defect.
 
 ---
 
