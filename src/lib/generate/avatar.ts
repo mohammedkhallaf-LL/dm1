@@ -31,7 +31,7 @@ function escapeXml(s: string): string {
 
 function hslPair(seed: number): [string, string] {
   const hue = seed % 360
-  return [`hsl(${hue} 65% 45%)`, `hsl(${(hue + 40) % 360} 65% 35%)`]
+  return [`hsl(${hue}, 65%, 45%)`, `hsl(${(hue + 40) % 360}, 65%, 35%)`]
 }
 
 /** Monogram avatar on a deterministic gradient. Pure SVG — never a real face. */
@@ -53,5 +53,5 @@ export function companyLogoSvg(name: string): string {
 }
 
 export function svgToDataUri(svg: string): string {
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
 }
