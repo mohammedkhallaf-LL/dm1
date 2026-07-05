@@ -55,3 +55,17 @@ export function companyLogoSvg(name: string): string {
 export function svgToDataUri(svg: string): string {
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
 }
+
+/** Structured data for rendering an avatar as inline JSX SVG. */
+export function avatarProps(name: string): { id: string; c1: string; c2: string; label: string } {
+  const seed = hash(name)
+  const [c1, c2] = hslPair(seed)
+  return { id: `g${seed}`, c1, c2, label: initials(name) }
+}
+
+/** Structured data for rendering a company logo as inline JSX SVG. */
+export function logoProps(name: string): { id: string; c1: string; c2: string; label: string } {
+  const seed = hash(name)
+  const [c1, c2] = hslPair(seed + 7)
+  return { id: `l${seed}`, c1, c2, label: initials(name) }
+}
