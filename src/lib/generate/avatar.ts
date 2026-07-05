@@ -53,5 +53,5 @@ export function companyLogoSvg(name: string): string {
 }
 
 export function svgToDataUri(svg: string): string {
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`
 }
