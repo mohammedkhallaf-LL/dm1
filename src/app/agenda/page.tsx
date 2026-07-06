@@ -11,7 +11,7 @@ export default async function AgendaPage({ searchParams }: { searchParams: Promi
   return (
     <>
       <SiteNav exampleId={id} meta={meta} />
-      <h1 className="px-4 pt-6 text-2xl font-bold text-foreground">Agenda <span className="text-sm font-normal text-muted-foreground">({sessions.length.toLocaleString()})</span></h1>
+      <h1 className="px-4 pt-8 pb-2 text-2xl font-bold text-foreground">Agenda <span className="text-sm font-normal text-muted-foreground">({sessions.length.toLocaleString()})</span></h1>
       <ul className="flex flex-col gap-3 p-4">
         {sessions.map((s) => (
           <li key={s.id} className="rounded-lg border border-border bg-card p-4">

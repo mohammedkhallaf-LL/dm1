@@ -4,7 +4,10 @@ import { Avatar } from './Avatar.tsx'
 
 export function PersonCard({ person, exampleId }: { person: IndividualRecord; exampleId: string }) {
   return (
-    <Link href={`/attendees/${person.id}?example=${exampleId}`} className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 hover:border-brand">
+    <Link
+      href={`/attendees/${person.id}?example=${exampleId}`}
+      className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors transition-shadow duration-200 hover:border-brand hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+    >
       <Avatar name={person.fullName} src={person.photoUrl} />
       <div className="min-w-0">
         <div className="truncate font-medium text-foreground">{person.fullName}</div>

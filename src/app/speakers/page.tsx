@@ -17,7 +17,7 @@ export default async function SpeakersPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <SiteNav exampleId={id} meta={meta} />
-      <h1 className="px-4 pt-6 text-2xl font-bold text-foreground">Speakers <span className="text-sm font-normal text-muted-foreground">({view.total.toLocaleString()})</span></h1>
+      <h1 className="px-4 pt-8 pb-2 text-2xl font-bold text-foreground">Speakers <span className="text-sm font-normal text-muted-foreground">({view.total.toLocaleString()})</span></h1>
       <Layout people={view.items} exampleId={id} page={view.page} totalPages={view.totalPages} baseHref="/speakers" />
       <Footer />
     </>
