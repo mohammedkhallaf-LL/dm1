@@ -34,3 +34,19 @@ const messy = messifyIndividual(original, cfg, rng(1))
 assert.equal(JSON.stringify(original), snapshot, 'messify must not mutate input (ground truth intact)')
 assert.notEqual(messy, original, 'messify returns a copy')
 console.log('generate OK')
+
+// --- coherence: geo/bio/abstracts wired to real-world modules ---
+import { EXAMPLES } from '../../examples/index.ts'
+
+const cfg2 = EXAMPLES.find((e) => e.id === 'fintech-connect-2026')!
+const companies2 = generateCompanies(cfg2)
+const inds2 = generateIndividuals(cfg2, companies2)
+const events2 = generateEvents(cfg2)
+// Geography coherent: no defunct/random country, city/region/country from the curated set.
+assert.ok(!inds2.some((i) => /Jamahiriya/.test(i.country ?? '')), 'no defunct countries')
+// Bios are professional (reference the person), not faker nonsense.
+const withBio = inds2.filter((i) => i.bio)
+assert.ok(withBio.length > 0 && withBio.every((i) => !/(fan|lover|advocate),/.test(i.bio!)), 'pro bios')
+// Events: no Latin lorem ipsum in overviews.
+assert.ok(!events2.some((e) => /\b(lorem|ipsum|aiunt|cresco|deprecator)\b/i.test(e.eventOverview)), 'no latin abstracts')
+console.log('generate coherence OK')
