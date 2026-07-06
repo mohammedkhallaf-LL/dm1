@@ -1,6 +1,7 @@
 import { resolveExampleId } from '../../lib/active-example.ts'
 import { loadCompanies, loadMeta, paginate } from '../../lib/data.ts'
 import { pickLayout } from '../../components/layouts/index.ts'
+import { ApiList } from '../../components/layouts/ApiList.tsx'
 import { SiteNav } from '../../components/site/SiteNav.tsx'
 import { Footer } from '../../components/site/Footer.tsx'
 
@@ -10,6 +11,21 @@ export default async function ExhibitorsPage({ searchParams }: { searchParams: P
   const { example } = await searchParams
   const id = resolveExampleId(example)
   const meta = loadMeta(id)
+
+  if (meta.config.surface === 'api-spa' || meta.config.surface === 'load-more') {
+    return (
+      <>
+        <SiteNav exampleId={id} meta={meta} />
+        <h1 className="px-4 pt-6 text-2xl font-bold text-foreground">Exhibitors</h1>
+        <ApiList exampleId={id} kind="exhibitors" autoLoad={meta.config.surface === 'api-spa'} />
+        <Footer />
+      </>
+    )
+  }
+  // api-hybrid and ssr: fall through to the existing SSR render. For
+  // api-hybrid, the SSR page 1 (below) plus the /api/[example]/exhibitors
+  // endpoint together satisfy the hybrid surface — no client change needed.
+
   const rows = loadCompanies(id).map((r) => r.display)
   const usePages = meta.config.layout === 'paginated-list' || meta.config.layout === 'dense-table'
   const Layout = pickLayout(meta.config.layout)
