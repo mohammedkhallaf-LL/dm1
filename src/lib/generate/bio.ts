@@ -9,7 +9,7 @@ const OPENERS = [
 ]
 const MIDDLES = [
   'with over {years} years across {domain}',
-  'building teams that ship {domain} at scale',
+  'building teams that operate across {domain} at scale',
   'and previously held roles spanning {domain}',
 ]
 const CLOSERS = [
@@ -29,6 +29,6 @@ export function professionalBio(f: typeof Faker, fullName: string, title: string
     .replaceAll('{domain}', f.helpers.arrayElement(DOMAIN)).replaceAll('{topic}', topic)
   const opener = fill(f.helpers.arrayElement(OPENERS))
   const middle = fill(f.helpers.arrayElement(MIDDLES))
-  const closer = fill(f.helpers.arrayElement(CLOSERS)).replaceAll('{name}', first)
+  const closer = fill(f.helpers.arrayElement(CLOSERS).replaceAll('{name}', first))
   return `${opener} ${middle}. ${closer}`
 }
