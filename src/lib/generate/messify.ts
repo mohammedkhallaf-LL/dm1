@@ -17,11 +17,19 @@ export function messifyIndividual(rec: IndividualRecord, cfg: ExampleConfig, ran
   d.interests = drop(d.interests)
   d.twitter = drop(d.twitter)
   if (rand() < 0.3 && d.city) d.city = d.city.toUpperCase()
+  let emailAlreadyObfuscated = false
   if (cfg.difficulty === 'hard') {
     if (rand() < 0.25) { const t = d.firstName; d.firstName = d.lastName; d.lastName = t } // swap
     if (rand() < 0.2) d.fullName = `${d.fullName}  ${EMOJI[Math.floor(rand() * EMOJI.length)]}` // emoji + double space
-    if (rand() < 0.3 && d.email) d.email = obfuscateEmail(d.email) // obfuscated
-    if (rand() < 0.15 && d.title) d.title = `${d.title} / ${cfg.titlePool[0]}` // multi-value cell
+    if (rand() < 0.3 && d.email) { d.email = obfuscateEmail(d.email); emailAlreadyObfuscated = true } // obfuscated
+    if (rand() < 0.15 && d.title && cfg.titlePool?.[0]) d.title = `${d.title} / ${cfg.titlePool[0]}` // multi-value cell
+  }
+  // Cloudflare-style email obfuscation: the visible text a pre-JS DOM scan sees is the
+  // literal placeholder; the real address lives only in truth. Source: deep-research 2026-07-06.
+  // Mutually exclusive with the [at]/dot obfuscation above — only one email transform per draw.
+  const apiSurface = (cfg as { surface?: string }).surface?.startsWith('api')
+  if ((cfg.difficulty === 'hard' || apiSurface) && !emailAlreadyObfuscated && d.email && rand() < 0.35) {
+    d.email = '[email protected]'
   }
   return d
 }
