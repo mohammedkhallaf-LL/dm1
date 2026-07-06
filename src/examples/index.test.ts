@@ -1,11 +1,11 @@
 import assert from 'node:assert'
 import { EXAMPLES, getExample, DEFAULT_EXAMPLE_ID } from './index.ts'
 
-assert.equal(EXAMPLES.length, 21, 'exactly 21 examples')
-assert.deepEqual(EXAMPLES.map((e) => e.order), Array.from({ length: 21 }, (_, i) => i + 1), 'orders 1..21 contiguous')
-assert.equal(new Set(EXAMPLES.map((e) => e.id)).size, 21, 'ids unique')
-assert.equal(new Set(EXAMPLES.map((e) => e.seed)).size, 21, 'seeds unique')
-assert.equal(EXAMPLES.filter((e) => e.theme === 'tech').length, 7, '7 tech')
+assert.equal(EXAMPLES.length, 22, 'exactly 22 examples')
+assert.deepEqual(EXAMPLES.map((e) => e.order), Array.from({ length: 22 }, (_, i) => i + 1), 'orders 1..22 contiguous')
+assert.equal(new Set(EXAMPLES.map((e) => e.id)).size, 22, 'ids unique')
+assert.equal(new Set(EXAMPLES.map((e) => e.seed)).size, 22, 'seeds unique')
+assert.equal(EXAMPLES.filter((e) => e.theme === 'tech').length, 8, '8 tech')
 assert.equal(EXAMPLES.filter((e) => e.theme === 'health').length, 7, '7 health')
 assert.equal(EXAMPLES.filter((e) => e.theme === 'multi').length, 7, '7 multi')
 
@@ -19,3 +19,13 @@ assert.ok(EXAMPLES.some((e) => e.scale.individuals >= 1500), 'at least one >=150
 assert.equal(getExample(DEFAULT_EXAMPLE_ID)!.order, 1)
 assert.equal(getExample('nope'), undefined)
 console.log('examples OK')
+
+// Every example declares a surface + label; label mentions difficulty and scale.
+for (const e of EXAMPLES) {
+  assert.ok(['ssr','api-spa','api-hybrid','load-more'].includes(e.surface), `${e.id} has surface`)
+  assert.ok(e.label && e.label.length > 8, `${e.id} has descriptive label`)
+}
+// All 4 surfaces are represented across the matrix.
+const surfaces = new Set(EXAMPLES.map((e) => e.surface))
+assert.ok(surfaces.size === 4, `all 4 surfaces present, got ${[...surfaces]}`)
+console.log('surface config OK')

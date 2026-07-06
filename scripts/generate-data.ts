@@ -31,8 +31,8 @@ for (const cfg of EXAMPLES) {
 
   totalInd += individuals.length
   totalCo += companies.length
-  process.stdout.write(`\r  ${cfg.order}/21 ${cfg.eventName} (${individuals.length} ind, ${companies.length} co)        `)
+  process.stdout.write(`\r  ${cfg.order}/22 ${cfg.eventName} (${individuals.length} ind, ${companies.length} co)        `)
 }
-console.log(`\nDone. ${totalInd} individuals, ${totalCo} companies across 21 examples.`)
+console.log(`\nDone. ${totalInd} individuals, ${totalCo} companies across 22 examples.`)
 if (totalInd < 1000) throw new Error(`Only ${totalInd} individuals — spec requires >=1000`)
 if (totalCo < 600) throw new Error(`Only ${totalCo} companies — spec requires >=600`)

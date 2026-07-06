@@ -9,7 +9,8 @@ import type { ExampleConfig } from '../../examples/index.ts'
 const cfg: ExampleConfig = {
   id: 't', order: 1, theme: 'tech', eventName: 'T', tagline: '', venue: '', city: '', country: '',
   dates: { start: '2026-09-14', end: '2026-09-16' }, seed: 999, difficulty: 'hard',
-  layout: 'card-grid', scale: { individuals: 30, companies: 10, sessions: 5 },
+  layout: 'card-grid', surface: 'ssr', label: 'Tech · hard · SSR · 30p/10c · full fields',
+  scale: { individuals: 30, companies: 10, sessions: 5 },
   coverage: { entities: ['individuals', 'companies', 'events'], emailsInline: false, fieldFullness: 'full' },
   industryPool: ['Software/SaaS'], titlePool: ['CEO', 'CTO'], sessionTopics: ['AI'],
 }
