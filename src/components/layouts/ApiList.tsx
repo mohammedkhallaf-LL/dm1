@@ -29,40 +29,71 @@ export function ApiList({
   const [page, setPage] = useState(autoLoad ? 1 : 0)
   const [next, setNext] = useState<string | null>('1')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function loadPage(p: number) {
     setLoading(true)
-    const res = await fetch(`/api/${exampleId}/${kind}?page=${p}&pageSize=50`)
-    const env: ApiEnvelope<IndividualRecord | CompanyRecord> = await res.json()
-    setRows((r) => [...r, ...env.data])
-    setNext(env.nextCursor)
-    setPage(p)
-    setLoading(false)
+    setError(null)
+    try {
+      const res = await fetch(`/api/${exampleId}/${kind}?page=${p}&pageSize=50`)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const env: ApiEnvelope<IndividualRecord | CompanyRecord> = await res.json()
+      setRows((r) => [...r, ...env.data])
+      setNext(env.nextCursor)
+      setPage(p)
+    } catch {
+      // Surface a recoverable error rather than leaving the button stuck on
+      // "Loading…" — the user can retry the same page.
+      setError('Could not load results.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
-    if (autoLoad) void loadPage(1) // eslint-disable-line react-hooks/exhaustive-deps
+    // Guard against React StrictMode's double-invoke in dev (would double-fetch page 1).
+    let cancelled = false
+    if (autoLoad && !cancelled) void loadPage(1) // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      cancelled = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exampleId, kind, autoLoad])
 
-  const buttonLabel = loading ? 'Loading…' : autoLoad ? 'Load more' : page === 0 ? 'Load results' : 'Load more'
+  // On error, retry the page we failed on: the next unfetched page is page+1,
+  // but a failed load never advanced `page`, so page+1 is the correct retry target.
+  const retryPage = page + 1
+  const buttonLabel = loading
+    ? 'Loading…'
+    : error
+      ? 'Retry'
+      : autoLoad
+        ? 'Load more'
+        : page === 0
+          ? 'Load results'
+          : 'Load more'
 
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {rows.map((r, i) =>
+        {rows.map((r) =>
           kind === 'attendees' ? (
-            <PersonCard key={i} person={r as IndividualRecord} exampleId={exampleId} />
+            <PersonCard key={r.id} person={r as IndividualRecord} exampleId={exampleId} />
           ) : (
-            <CompanyCard key={i} company={r as CompanyRecord} exampleId={exampleId} />
+            <CompanyCard key={r.id} company={r as CompanyRecord} exampleId={exampleId} />
           ),
         )}
       </div>
-      {next && (
+      {error && (
+        <p className="mt-4 text-center text-sm text-destructive" role="alert">
+          {error}
+        </p>
+      )}
+      {(next || error) && (
         <button
           disabled={loading}
-          onClick={() => void loadPage(page + 1)}
-          className="mx-auto mt-6 block rounded-md bg-brand px-4 py-2 text-white"
+          onClick={() => void loadPage(retryPage)}
+          className="mx-auto mt-6 block rounded-md bg-brand px-4 py-2 text-white disabled:opacity-50"
         >
           {buttonLabel}
         </button>
