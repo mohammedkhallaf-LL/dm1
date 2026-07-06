@@ -21,4 +21,14 @@ for (let i = 0; i < 200; i++) {
   assert.strictEqual(base.email, 'a.b@vertex.com', 'truth email never mutated')
 }
 assert.ok(sawPlaceholder, 'CF placeholder appears on hard example')
+
+// Mutual exclusivity: the [at]/dot obfuscation and the CF placeholder must never
+// both apply to the same display email (they are alternatives, not independent draws).
+for (let i = 0; i < 500; i++) {
+  const d = messifyIndividual({ ...base, id: 'mx' + i }, hardCfg, rng(i + 1000))
+  const isPlaceholder = d.email === '[email protected]'
+  const isAtObfuscated = !!d.email && d.email.includes(' [at] ')
+  assert.ok(!(isPlaceholder && isAtObfuscated), `email transforms are mutually exclusive (draw ${i})`)
+}
+
 console.log('messify.test OK')
