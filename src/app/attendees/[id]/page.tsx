@@ -35,6 +35,7 @@ export default async function AttendeeDetail({ params, searchParams }: { params:
           <div><dt className="text-muted-foreground">Country</dt><dd className="text-foreground">{p.country ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Industry</dt><dd className="text-foreground">{p.industry ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Org Type</dt><dd className="text-foreground">{p.orgType ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Type(s)</dt><dd className="text-foreground">{p.types.length ? p.types.join(', ') : '—'}</dd></div>
           <div><dt className="text-muted-foreground">LinkedIn</dt><dd className="truncate text-foreground">{p.linkedin ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Twitter</dt><dd className="truncate text-foreground">{p.twitter ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Instagram</dt><dd className="truncate text-foreground">{p.instagram ?? '—'}</dd></div>
