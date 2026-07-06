@@ -13,6 +13,8 @@ export default async function ExhibitorDetail({ params, searchParams }: { params
   const row = loadCompanies(id).find((r) => r.display.id === companyId)
   if (!row) notFound()
   const c = row.display
+  const booth = typeof c.additionalInfo.booth === 'string' ? c.additionalInfo.booth : undefined
+  const sponsorTier = typeof c.additionalInfo.sponsorTier === 'string' ? c.additionalInfo.sponsorTier : undefined
   return (
     <>
       <SiteNav exampleId={id} meta={meta} />
@@ -32,11 +34,23 @@ export default async function ExhibitorDetail({ params, searchParams }: { params
         </div>
         <dl className="mt-6 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
           <div><dt className="text-muted-foreground">Website</dt><dd className="truncate text-foreground">{c.website ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Phone</dt><dd className="text-foreground">{c.phone ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Employees</dt><dd className="text-foreground">{c.numEmployees?.toLocaleString() ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Revenue</dt><dd className="text-foreground">{c.revenue ? `$${c.revenue.toLocaleString()}` : '—'}</dd></div>
           <div><dt className="text-muted-foreground">Address</dt><dd className="text-foreground">{c.address ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">City</dt><dd className="text-foreground">{c.city ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Region</dt><dd className="text-foreground">{c.region ?? '—'}</dd></div>
           <div><dt className="text-muted-foreground">Country</dt><dd className="text-foreground">{c.country ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Org Type</dt><dd className="text-foreground">{c.orgType ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">LinkedIn</dt><dd className="truncate text-foreground">{c.linkedin ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Facebook</dt><dd className="truncate text-foreground">{c.facebook ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Twitter</dt><dd className="truncate text-foreground">{c.twitter ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Instagram</dt><dd className="truncate text-foreground">{c.instagram ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">YouTube</dt><dd className="truncate text-foreground">{c.youtube ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Company Profile URL</dt><dd className="truncate text-foreground">{c.profileUrl ?? '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Participant Type(s)</dt><dd className="text-foreground">{c.types.length ? c.types.join(', ') : '—'}</dd></div>
+          <div><dt className="text-muted-foreground">Booth</dt><dd className="text-foreground">{booth ?? '—'}</dd></div>
+          {sponsorTier && <div><dt className="text-muted-foreground">Sponsor Tier</dt><dd className="text-foreground">{sponsorTier}</dd></div>}
         </dl>
         {c.description && <p className="mt-6 text-foreground">{c.description}</p>}
       </article>
