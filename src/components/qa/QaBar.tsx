@@ -50,7 +50,7 @@ export function QaBar() {
           </optgroup>
         ))}
       </select>
-      <span className="text-white/60">{cfg.layout} · {cfg.scale.individuals} ind / {cfg.scale.companies} co</span>
+      <span className="text-white/60">{cfg.label}</span>
       <div className="ml-auto flex items-center gap-1">
         <span className="text-white/60">Export truth:</span>
         <button disabled={busy} onClick={() => doExport('csv')} className="rounded bg-white/10 px-2 py-1 hover:bg-white/20 disabled:opacity-50">CSV</button>
