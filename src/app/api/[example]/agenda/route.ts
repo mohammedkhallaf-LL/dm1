@@ -1,0 +1,13 @@
+import { resolveExampleId } from '../../../../lib/active-example.ts'
+import { loadEvents } from '../../../../lib/data.ts'
+import { paginateEnvelope } from '../../../../lib/api-envelope.ts'
+
+export async function GET(req: Request, ctx: { params: Promise<{ example: string }> }) {
+  const { example } = await ctx.params
+  const id = resolveExampleId(example)
+  const url = new URL(req.url)
+  const page = Number(url.searchParams.get('page') ?? '1')
+  const pageSize = Number(url.searchParams.get('pageSize') ?? '100')
+  const q = url.searchParams.get('q')
+  return Response.json(paginateEnvelope(loadEvents(id), page, pageSize, q, ['name', 'eventType', 'location']))
+}
