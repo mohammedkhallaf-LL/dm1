@@ -14,9 +14,9 @@
     "@fontsource-variable/inter": "^5",
     "exceljs": "4.4.0",
     "lucide-react": "^0.400.0",
-    "next": "^16.2.7",
-    "react": "^19",
-    "react-dom": "^19"
+    "next": "^16.4.3",
+    "react": "^19.2.9",
+    "react-dom": "^19.2.9"
   },
   "devDependencies": {
     "@faker-js/faker": "^10",
