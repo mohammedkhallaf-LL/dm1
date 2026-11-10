@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { resolveExampleId } from '../../lib/active-example.ts'
 import { loadCompanies, loadMeta, paginate } from '../../lib/data.ts'
 import { pickLayout } from '../../components/layouts/index.ts'
@@ -11,6 +12,8 @@ export default async function ExhibitorsPage({ searchParams }: { searchParams: P
   const { example } = await searchParams
   const id = resolveExampleId(example)
   const meta = loadMeta(id)
+
+  if (meta.config.surface === 'cursor-feed') redirect(`/directory?example=${id}`)
 
   if (meta.config.surface === 'api-spa' || meta.config.surface === 'load-more') {
     return (

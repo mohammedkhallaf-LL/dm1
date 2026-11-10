@@ -3,7 +3,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard'
 export type LayoutVariant =
   | 'card-grid' | 'dense-table' | 'paginated-list'
   | 'single-roster' | 'tabbed-profiles' | 'infinite-scroll'
-export type SurfaceKind = 'ssr' | 'api-spa' | 'api-hybrid' | 'load-more'
+export type SurfaceKind = 'ssr' | 'api-spa' | 'api-hybrid' | 'load-more' | 'cursor-feed'
 
 export interface ExampleConfig {
   id: string
